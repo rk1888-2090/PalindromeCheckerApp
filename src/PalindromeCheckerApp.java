@@ -1,33 +1,67 @@
-import java.util.Scanner;
-import java.util.Stack;
-public class UseCase5PalindromeCheckerApp {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("PALINDROME CHECKER APP");
-        System.out.print("Enter a string: ");
-        String input = scanner.nextLine();
-        Stack<Character> stack = new Stack<>();
-        for (int i = 0; i < input.length(); i++) {
-            char ch = input.charAt(i);
-            stack.push(ch);      
-            queue.add(ch);       
+import java.util.*;
+class UseCase8PalindromeCheckerApp
+{
+    static class Node
+    {
+        char data;
+        Node next;
+        Node(char d)
+        {
+            data=d;
+            next=null;
         }
-
-        boolean isPalindrome = true;
-        
-        for (int i = 0; i < input.length(); i++) {
-            char fromQueue = queue.remove();  
-            char fromStack = stack.pop();     
-            if (fromQueue != fromStack) {
-                isPalindrome = false;
-                break;
-            }
+    }
+    static Node head=null;
+    static void add(char c)
+    {
+        Node n=new Node(c);
+        if(head==null)
+        {
+            head=n;
+            return;
         }
-        if (isPalindrome) {
-            System.out.println("The given string is a Palindrome.");
-        } else {
-            System.out.println("The given string is NOT a Palindrome.");
+        Node t=head;
+        while(t.next!=null) t=t.next;
+        t.next=n;
+    }
+    static boolean check()
+    {
+        if(head==null||head.next==null) return true;
+        Node slow=head;
+        Node fast=head;
+        while(fast!=null && fast.next!=null)
+        {
+            slow=slow.next;
+            fast=fast.next.next;
         }
-        scanner.close();
+        Node prev=null;
+        Node curr=slow;
+        Node next=null;
+        while(curr!=null)
+        {
+            next=curr.next;
+            curr.next=prev;
+            prev=curr;
+            curr=next;
+        }
+        Node first=head;
+        Node second=prev;
+        while(second!=null)
+        {
+            if(first.data!=second.data) return false;
+            first=first.next;
+            second=second.next;
+        }
+        return true;
+    }
+    public static void main(String[] args)
+    {
+        Scanner sc=new Scanner(System.in);
+        System.out.println("enter string");
+        String s=sc.nextLine();
+        s=s.replaceAll("\\s+","").toLowerCase();
+        for(int i=0;i<s.length();i++) add(s.charAt(i));
+        if(check()) System.out.println("palindrome");
+        else System.out.println("not palindrome");
     }
 }
