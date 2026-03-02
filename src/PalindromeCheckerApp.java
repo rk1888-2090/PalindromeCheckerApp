@@ -1,16 +1,25 @@
 import java.util.Scanner;
-public class UseCase4PalindromeCheckerApp {
+import java.util.Stack;
+import java.util.Queue;
+import java.util.LinkedList;
+public class UseCase6PalindromeCheckerApp {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("PALINDROME CHECKER APP");
         System.out.print("Enter a string: ");
         String input = scanner.nextLine();
-        char[] characters = input.toCharArray();
-        int left = 0;
-        int right = characters.length - 1;
+        Stack<Character> stack = new Stack<>();
+        Queue<Character> queue = new LinkedList<>();
+        for (int i = 0; i < input.length(); i++) {
+            char ch = input.charAt(i);
+            stack.push(ch);     
+            queue.add(ch);      
+        }
         boolean isPalindrome = true;
-        while (left < right) {
-            if (characters[left] != characters[right]) {
+        for (int i = 0; i < input.length(); i++) {
+            char fromQueue = queue.remove(); 
+            char fromStack = stack.pop();    
+            if (fromQueue != fromStack) {
                 isPalindrome = false;
                 break;
             }
@@ -24,5 +33,4 @@ public class UseCase4PalindromeCheckerApp {
         }
         scanner.close();
     }
-
 }
