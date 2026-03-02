@@ -23,6 +23,8 @@ public class UseCase6PalindromeCheckerApp {
                 isPalindrome = false;
                 break;
             }
+            left++;
+            right--;
         }
         if (isPalindrome) {
             System.out.println("The given string is a Palindrome.");
