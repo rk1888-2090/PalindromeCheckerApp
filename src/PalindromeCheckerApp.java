@@ -8,25 +8,26 @@ public class UseCase5PalindromeCheckerApp {
         String input = scanner.nextLine();
         Stack<Character> stack = new Stack<>();
         for (int i = 0; i < input.length(); i++) {
-            stack.push(input.charAt(i));
+            char ch = input.charAt(i);
+            stack.push(ch);      
+            queue.add(ch);       
         }
 
         boolean isPalindrome = true;
         
         for (int i = 0; i < input.length(); i++) {
-            char poppedChar = stack.pop();
-            if (input.charAt(i) != poppedChar) {
+            char fromQueue = queue.remove();  
+            char fromStack = stack.pop();     
+            if (fromQueue != fromStack) {
                 isPalindrome = false;
                 break;
             }
         }
-
         if (isPalindrome) {
             System.out.println("The given string is a Palindrome.");
         } else {
             System.out.println("The given string is NOT a Palindrome.");
         }
-
         scanner.close();
     }
 }
