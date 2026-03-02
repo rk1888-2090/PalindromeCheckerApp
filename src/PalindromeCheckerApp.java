@@ -1,47 +1,67 @@
-import java.util.Scanner;
-import java.util.Deque;
-import java.util.LinkedList;
-
-public class UseCase7PalindromeCheckerApp {
-
-    public static void main(String[] args) {
-
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("=========================================");
-        System.out.println("        PALINDROME CHECKER APP");
-        System.out.println("=========================================");
-
-        System.out.print("Enter a string: ");
-        String input = scanner.nextLine();
-
-        Deque<Character> deque = new LinkedList<>();
-
-        // Insert characters into deque
-        for (int i = 0; i < input.length(); i++) {
-            deque.addLast(input.charAt(i));
+import java.util.*;
+class UseCase8PalindromeCheckerApp
+{
+    static class Node
+    {
+        char data;
+        Node next;
+        Node(char d)
+        {
+            data=d;
+            next=null;
         }
-
-        boolean isPalindrome = true;
-
-        // Remove first & last and compare
-        while (deque.size() > 1) {
-
-            char front = deque.removeFirst();
-            char rear = deque.removeLast();
-
-            if (front != rear) {
-                isPalindrome = false;
-                break;
-            }
+    }
+    static Node head=null;
+    static void add(char c)
+    {
+        Node n=new Node(c);
+        if(head==null)
+        {
+            head=n;
+            return;
         }
-
-        if (isPalindrome) {
-            System.out.println("Result: The given string is a Palindrome.");
-        } else {
-            System.out.println("Result: The given string is NOT a Palindrome.");
+        Node t=head;
+        while(t.next!=null) t=t.next;
+        t.next=n;
+    }
+    static boolean check()
+    {
+        if(head==null||head.next==null) return true;
+        Node slow=head;
+        Node fast=head;
+        while(fast!=null && fast.next!=null)
+        {
+            slow=slow.next;
+            fast=fast.next.next;
         }
-
-        scanner.close();
+        Node prev=null;
+        Node curr=slow;
+        Node next=null;
+        while(curr!=null)
+        {
+            next=curr.next;
+            curr.next=prev;
+            prev=curr;
+            curr=next;
+        }
+        Node first=head;
+        Node second=prev;
+        while(second!=null)
+        {
+            if(first.data!=second.data) return false;
+            first=first.next;
+            second=second.next;
+        }
+        return true;
+    }
+    public static void main(String[] args)
+    {
+        Scanner sc=new Scanner(System.in);
+        System.out.println("enter string");
+        String s=sc.nextLine();
+        s=s.replaceAll("\\s+","").toLowerCase();
+        for(int i=0;i<s.length();i++) add(s.charAt(i));
+        if(check()) System.out.println("palindrome");
+        else System.out.println("not palindrome");
     }
 }
