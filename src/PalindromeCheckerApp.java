@@ -24,4 +24,5 @@ public class UseCase4PalindromeCheckerApp {
         }
         scanner.close();
     }
+
 }
